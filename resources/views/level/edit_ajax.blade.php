@@ -1,79 +1,45 @@
-@empty($user)
+@empty($level)
     <div id="modal-master" class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-
-            <!-- Modal Header -->
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">&times;</span></button>
             </div>
-
-            <!-- Modal body -->
             <div class="modal-body">
                 <div class="alert alert-danger">
                     <h5><i class="icon fas fa-ban"></i> Kesalahan!!!</h5>
-                    Data yang Anda cari tidak ditemukan
+                    Data yang anda cari tidak ditemukan
                 </div>
-                <a href="{{ url('/user') }}" class="btn btn-warning">Kembali</a>
+                <a href="{{ url('/level') }}" class="btn btn-warning">Kembali</a>
             </div>
         </div>
     </div>
 @else
-    <form action="{{ url('/user/' . $user->user_id . '/update_ajax') }}" method="POST" id="form-edit">
+    <form action="{{ url('/level/' . $level->level_id . '/update_ajax') }}" method="POST" id="form-edit">
         @csrf
         @method('PUT')
         <div id="modal-master" class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <!-- Modal Header -->
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Edit Data User</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-
+                    <h5 class="modal-title" id="exampleModalLabel">Edit Data Level</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span></button>
-
                 </div>
-
-                <!-- Modal body -->
                 <div class="modal-body">
                     <div class="form-group">
-                        <label>Level Pengguna</label>
-                        <select name="level_id" id="level_id" class="form-control" required>
-                            <option value="">- Pilih Level -</option>
-                            @foreach ($level as $l)
-                                <option {{ $l->level_id == $user->level_id ? 'selected' : '' }} value="{{ $l->level_id }}">
-                                    {{ $l->level_nama }}</option>
-                            @endforeach
-                        </select>
-
-                        <small id="error-level_id" class="error-text form-text text-danger"></small>
+                        <label>Kode Level</label>
+                        <input type="text" name="level_kode" id="level_kode" class="form-control"
+                            value="{{ $level->level_kode }}" required>
+                        <small id="error-level_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
-                        <label>Username</label>
-                        <input value="{{ $user->username }}" type="text" name="username" id="username"
-                            class="form-control" required>
-
-                        <small id="error-username" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Nama Lengkap</label>
-                        <input value="{{ $user->nama_lengkap }}" type="text" name="nama_lengkap" id="nama_lengkap" class="form-control"
-                            required>
-
-                        <small id="error-nama_lengkap" class="error-text form-text text-danger"></small>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input value="" type="password" name="password" id="password" class="form-control">
-
-                        <small class="form-text text-muted">Abaikan jika tidak ingin ubah password</small>
-                        <small id="error-password" class="error-text form-text text-danger"></small>
+                        <label>Nama Level</label>
+                        <input type="text" name="level_nama" id="level_nama" class="form-control"
+                            value="{{ $level->level_nama }}" required>
+                        <small id="error-level_nama" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
-
-                <!-- Modal footer -->
                 <div class="modal-footer">
                     <button type="button" data-dismiss="modal" class="btn btn-warning">Batal</button>
                     <button type="submit" class="btn btn-primary">Simpan</button>
@@ -85,23 +51,13 @@
         $(document).ready(function() {
             $("#form-edit").validate({
                 rules: {
-                    level_id: {
+                    level_kode: {
                         required: true,
-                        number: true
+                        maxlength: 10
                     },
-                    username: {
+                    level_nama: {
                         required: true,
-                        minlength: 3,
-                        maxlength: 20
-                    },
-                    nama_lengkap: {
-                        required: true,
-                        minlength: 3,
                         maxlength: 100
-                    },
-                    password: {
-                        minlength: 6,
-                        maxlength: 20
                     }
                 },
                 submitHandler: function(form) {
@@ -117,8 +73,8 @@
                                     title: 'Berhasil',
                                     text: response.message
                                 });
-                                // dataUser.ajax.reload();
-                                $('#table_user').DataTable().ajax.reload();
+                                // dataLevel.ajax.reload();
+                                $('#table_level').DataTable().ajax.reload();
                             } else {
                                 $('.error-text').text('');
                                 $.each(response.msgField, function(prefix, val) {
@@ -149,4 +105,3 @@
         });
     </script>
 @endempty
-

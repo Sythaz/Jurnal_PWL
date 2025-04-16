@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
@@ -32,4 +33,21 @@ Route::group(['prefix' => 'user'], function () {
     Route::get('/{id}/delete_ajax', [UserController::class, 'confirm_ajax']);  // Untuk tampilkan form confirm delete user Ajax
     Route::delete('/{id}/delete_ajax', [UserController::class, 'delete_ajax']); // Untuk hapus data user Ajax
     Route::delete('/{id}', [UserController::class, 'destroy']); // menghapus data user
+});
+
+Route::group(['prefix' => 'level'], function () {
+    Route::get('/', [LevelController::class, 'index']);          // <enampilkan halaman awal level
+    Route::post('/list', [LevelController::class, 'list']);      // Menampilkan data level dalam bentuk json untuk datatables
+    Route::get('/create', [LevelController::class, 'create']);   // menampilkan halaman form tambah level
+    Route::post('/', [LevelController::class, 'store']);         // menyimpan data level baru
+    Route::get('/create_ajax', [LevelController::class, 'create_ajax']);     // Menampilkan halaman form tambah level Ajax
+    Route::post('/ajax', [LevelController::class, 'store_ajax']);            // Menyimpan data level baru Ajax
+    Route::get('/{id}', [LevelController::class, 'show']);       // menampilkan detail level
+    Route::get('/{id}/edit', [LevelController::class, 'edit']);  // Menampilkan halaman form edit level
+    Route::put('/{id}', [LevelController::class, 'update']);     // menyimpan perubahan data level
+    Route::get('/{id}/edit_ajax', [LevelController::class, 'edit_ajax']);        // Menampilkan halaman form edit level Ajax
+    Route::put('/{id}/update_ajax', [LevelController::class, 'update_ajax']);   // Menyimpan perubahan data level Ajax
+    Route::get('/{id}/delete_ajax', [LevelController::class, 'confirm_ajax']);  // Untuk tampilkan form confirm delete level Ajax
+    Route::delete('/{id}/delete_ajax', [LevelController::class, 'delete_ajax']); // Untuk hapus data level Ajax
+    Route::delete('/{id}', [LevelController::class, 'destroy']); // menghapus data level
 });

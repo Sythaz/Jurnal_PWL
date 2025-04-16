@@ -39,7 +39,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Nama</th>
+                        <th>Nama Lengkap</th>
                         <th>Level Pengguna</th>
                         <th>Aksi</th>
                     </tr>
@@ -93,7 +93,7 @@
 
                     searchable: true
                 }, {
-                    data: "nama",
+                    data: "nama_lengkap",
                     className: "",
                     orderable: true,
                     searchable: true
