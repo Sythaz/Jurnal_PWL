@@ -1,0 +1,121 @@
+@extends('layouts.template')
+
+@section('content')
+    <div class="card card-outline card-primary">
+        <div class="card-header">
+            <h3 class="card-title">{{ $page->title }}</h3>
+            <div class="card-tools">
+                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kegiatan/create') }}">Tambah</a>
+                <button onclick="modalAction('{{ url('kegiatan/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
+                    Tambah Ajax
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">{{ session('success') }}</div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">{{ session('error') }}</div>
+            @endif
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group row">
+                        <label class="col-1 control-label col-form-label">Filter :</label>
+                        <div class="col-3">
+                            <select class="form-control" id="kegiatan_table" name="kegiatan_table" required>
+                                <option value="">- Semua -</option>
+                                @foreach ($kegiatans as $item)
+                                    <option value="{{ $item->kegiatan_id }}">{{ $item->nama_kegiatan }}</option>
+                                @endforeach
+                            </select>
+                            <small class="form-text text-muted">Level Pengguna</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <table class="table table-bordered table-striped table-hover table-sm" id="table_kegiatan">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nama Kegiatan</th>
+                        <th>Waktu</th>
+                        <th>Catatan</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <div id="myModal" class="modal fade animate shake" tabindex="-1" role="dialog" data- backdrop="static"
+        data-keyboard="false" data-width="75%" aria-hidden="true"></div>
+@endsection
+
+@push('css')
+@endpush
+
+@push('js')
+    <script>
+        function modalAction(url = '') {
+            $('#myModal').load(url, function() {
+                $('#myModal').modal('show');
+            });
+        }
+
+        $(document).ready(function() {
+            var dataKegiatan = $('#table_kegiatan').DataTable({
+                // serverSide: true, jika ingin menggunakan server side processing
+                serverSide: true,
+                ajax: {
+                    "url": "{{ url('kegiatan/list') }}",
+                    "dataType": "json",
+                    "type": "POST",
+                    "data": function(d) {
+                        d.kegiatan_table = $('#kegiatan_table').val();
+                    }
+                },
+                columns: [{
+                    // nomor urut dari laravel datatable addIndexColumn()
+
+                    data: "DT_RowIndex",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "nama_kegiatan",
+                    className: "",
+
+                    // orderable: true, jika ingin kolom ini bisa diurutkan
+
+                    orderable: true,
+
+                    // searchable: true, jika ingin kolom ini bisa dicari
+
+                    searchable: true
+                }, {
+                    data: "waktu",
+                    className: "",
+                    orderable: true,
+                    searchable: true
+                }, {
+
+                    // mengambil data level hasil dari ORM berelasi
+
+                    data: "catatan",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }, {
+                    data: "aksi",
+                    className: "",
+                    orderable: false,
+                    searchable: false
+                }]
+            });
+
+            $('#kegiatan_table').on('change', function() {
+                dataKegiatan.ajax.reload();
+            })
+        });
+    </script>
+@endpush

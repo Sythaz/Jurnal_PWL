@@ -13,7 +13,7 @@ class LevelController extends Controller
     public function index()
     {
         $breadcrumb = (object) [
-            'title' => 'Daftar Level Level',
+            'title' => 'Daftar Level',
             'list' => ['Home', 'Level']
         ];
 
