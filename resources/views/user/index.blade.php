@@ -5,7 +5,6 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('user/create') }}">Tambah</a>
                 <button onclick="modalAction('{{ url('user/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
                     Tambah Ajax
                 </button>
@@ -80,36 +79,34 @@
                     data: "DT_RowIndex",
                     className: "text-center",
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    width: "10%"
                 }, {
                     data: "username",
                     className: "",
-
                     // orderable: true, jika ingin kolom ini bisa diurutkan
-
                     orderable: true,
-
                     // searchable: true, jika ingin kolom ini bisa dicari
-
-                    searchable: true
+                    searchable: true,
+                    width: "20%"
                 }, {
                     data: "nama_lengkap",
                     className: "",
                     orderable: true,
-                    searchable: true
+                    searchable: true,
+                    width: "35%"
                 }, {
-
                     // mengambil data level hasil dari ORM berelasi
-
                     data: "level.level_nama",
                     className: "",
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    width: "20%"
                 }, {
                     data: "aksi",
-                    className: "",
                     orderable: false,
-                    searchable: false
+                    searchable: false,
+                    width: "15%",
                 }]
             });
 

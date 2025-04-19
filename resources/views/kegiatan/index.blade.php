@@ -5,7 +5,6 @@
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
-                <a class="btn btn-sm btn-primary mt-1" href="{{ url('kegiatan/create') }}">Tambah</a>
                 <button onclick="modalAction('{{ url('kegiatan/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
                     Tambah Ajax
                 </button>
@@ -29,7 +28,7 @@
                                     <option value="{{ $item->kegiatan_id }}">{{ $item->nama_kegiatan }}</option>
                                 @endforeach
                             </select>
-                            <small class="form-text text-muted">Level Pengguna</small>
+                            <small class="form-text text-muted">Nama Kegiatan</small>
                         </div>
                     </div>
                 </div>
@@ -37,9 +36,8 @@
             <table class="table table-bordered table-striped table-hover table-sm" id="table_kegiatan">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nama Kegiatan</th>
                         <th>Waktu</th>
+                        <th>Nama Kegiatan</th>
                         <th>Catatan</th>
                         <th>Aksi</th>
                     </tr>
@@ -75,42 +73,31 @@
                     }
                 },
                 columns: [{
-                    // nomor urut dari laravel datatable addIndexColumn()
-
-                    data: "DT_RowIndex",
-                    className: "text-center",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "nama_kegiatan",
-                    className: "",
-
-                    // orderable: true, jika ingin kolom ini bisa diurutkan
-
-                    orderable: true,
-
-                    // searchable: true, jika ingin kolom ini bisa dicari
-
-                    searchable: true
-                }, {
-                    data: "waktu",
-                    className: "",
-                    orderable: true,
-                    searchable: true
-                }, {
-
-                    // mengambil data level hasil dari ORM berelasi
-
-                    data: "catatan",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }, {
-                    data: "aksi",
-                    className: "",
-                    orderable: false,
-                    searchable: false
-                }]
+                        data: "waktu",                        
+                        orderable: true,
+                        searchable: true,
+                        width: "15%"
+                    },
+                    {
+                        data: "nama_kegiatan",                        
+                        // orderable: true, jika ingin kolom ini bisa diurutkan
+                        orderable: false,
+                        // searchable: true, jika ingin kolom ini bisa dicari
+                        searchable: true,
+                        width: "25%"
+                    },
+                    {
+                        data: "catatan",
+                        orderable: false,
+                        searchable: true,
+                        width: "40%"
+                    }, {
+                        data: "aksi",                        
+                        orderable: false,
+                        searchable: true,
+                        width: "15%"
+                    }
+                ]
             });
 
             $('#kegiatan_table').on('change', function() {

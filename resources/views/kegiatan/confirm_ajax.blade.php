@@ -33,15 +33,15 @@
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Nama Kegiatan :</th>
+                            <th class="col-3">Nama Kegiatan</th>
                             <td class="col-9">{{ $kegiatan->nama_kegiatan }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Waktu :</th>
+                            <th class="col-3">Waktu</th>
                             <td class="col-9">{{ $kegiatan->waktu }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Catatan :</th>
+                            <th class="col-3">Catatan</th>
                             <td class="col-9">{{ $kegiatan->catatan }}</td>
                         </tr>
                     </table>

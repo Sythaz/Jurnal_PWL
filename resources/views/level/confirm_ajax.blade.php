@@ -33,11 +33,11 @@
                     </div>
                     <table class="table table-sm table-bordered table-striped">
                         <tr>
-                            <th class="text-right col-3">Kode :</th>
+                            <th class="col-3">Kode</th>
                             <td class="col-9">{{ $level->level_kode }}</td>
                         </tr>
                         <tr>
-                            <th class="text-right col-3">Nama :</th>
+                            <th class="col-3">Nama</th>
                             <td class="col-9">{{ $level->level_nama }}</td>
                         </tr>
                     </table>

@@ -10,18 +10,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('adminlte/plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
 
     <!-- SweetAlert2 -->
-    <link rel="stylesheet" href="{{ asset( 'adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('adminlte/dist/css/adminlte.min.css') }}">
@@ -30,45 +32,54 @@
 </head>
 
 
-<body class="hold-transition sidebar-mini">
-    <!-- Site wrapper -->
-    <div class="wrapper">
-        <!-- Navbar -->
-        @include('layouts.header')
-        <!-- /.navbar -->
+<body class="hold-transition sidebar-mini sidebar-collapse">
 
-        <!-- Main Sidebar Container -->
-        <aside class="main-sidebar sidebar-dark-primary elevation-4">
-            <!-- Brand Logo -->
-            <a href="{{ url('/') }}" class="brand-link">
-                <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
-                    class="brand-image img-circle elevation-3" style="opacity: .8">
-                <span class="brand-text font-weight-light">PWL - Starter Code</span>
-            </a>
+    @if (isset($breadcrumb))
+        <!-- Site wrapper -->
+        <div class="wrapper">
+            <!-- Navbar -->
+            {{-- Tidak menggunakan header --}}
+            {{-- @include('layouts.header') --}}
+            <!-- /.navbar -->
 
-            <!-- Sidebar -->
-            @include('layouts.sidebar')
-            <!-- /.sidebar-menu -->
-        </aside>
+            <!-- Main Sidebar Container -->
+            <aside class="main-sidebar sidebar-dark-primary elevation-4">
+                <!-- Brand Logo -->
+                <a href="{{ url('/') }}" class="brand-link">
+                    <img src="{{ asset('adminlte/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo"
+                        class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text font-weight-normal">Jurnal PWL - Syafiq</span>
+                </a>
 
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            @include('layouts.breadcrumb')
+                <!-- Sidebar -->
+                @include('layouts.sidebar')
+                <!-- /.sidebar-menu -->
+            </aside>
 
-            <!-- Main content -->
-            <section class="content">
-                @yield('content')
-            </section>
-            <!-- /.content -->
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <!-- Jika $breadcrumb tidak kosong dari controller, maka tampilkan (Penggunaan Welcome Page) -->
+                @include('layouts.breadcrumb')
+                <!-- Main content -->
+                <section class="content">
+                    @yield('content')
+                </section>
+                <!-- /.content -->
+            </div>
+            <!-- /.content-wrapper -->
+
+            {{-- Tidak menggunakan footer --}}
+            <!-- Control Footer -->
+            {{-- @include('layouts.footer') --}}
+            <!-- /.footer -->
         </div>
-        <!-- /.content-wrapper -->
-
-        <!-- Control Footer -->
-        @include('layouts.footer')
-        <!-- /.footer -->
-    </div>
-    <!-- ./wrapper -->
+        <!-- ./wrapper -->
+    @else
+        <section class="content">
+            @yield('content')
+        </section>
+    @endif
 
     <!-- jQuery -->
     <script src={{ asset('adminlte/plugins/jquery/jquery.min.js') }}></script>

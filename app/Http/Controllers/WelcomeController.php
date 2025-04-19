@@ -8,12 +8,15 @@ class WelcomeController extends Controller
 {
     public function index()
     {
-        $breadcrumb = (object) [
-            'title' => 'Selamat Datang',
-            'list' => ['Home', 'Welcome']
-        ];
+        // $breadcrumb = (object) [
+        //     'title' => 'Satu hari, satu cerita, satu jejak kehidupan.',
+        //     'list' => ['Home', 'Welcome']
+        // ];
 
         $activeMenu = 'dashboard';
-        return view('welcome', ['breadcrumb' => $breadcrumb, 'activeMenu' => $activeMenu]);
+        return view('welcome', [
+            'activeMenu' => $activeMenu,
+            // 'breadcrumb' => $breadcrumb,
+        ]);
     }
 }

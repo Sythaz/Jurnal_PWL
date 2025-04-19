@@ -10,19 +10,19 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label>Nama Kegiatan</label>
-                    <input value="{{ $kegiatan->nama_kegiatan }}" type="text" name="nama_kegiatan" id="nama_kegiatan" class="form-control" required>
+                    <input value="" type="text" name="nama_kegiatan" id="nama_kegiatan" class="form-control" required>
 
                     <small id="error-nama_kegiatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Waktu</label>
-                    <input value="{{ $kegiatan->waktu }}" type="datetime-local" name="waktu" id="waktu" class="form-control" required>
+                    <input value="" type="datetime-local" name="waktu" id="waktu" class="form-control" required>
 
                     <small id="error-waktu" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Catatan</label>
-                    <input value="{{ $kegiatan->catatan }}" type="text" name="catatan" id="catatan" class="form-control">
+                    <input value="" type="text" name="catatan" id="catatan" class="form-control">
 
                     <small id="error-catatan" class="error-text form-text text-danger"></small>
                 </div>

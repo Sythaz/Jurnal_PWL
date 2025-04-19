@@ -6,8 +6,8 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Kesalahan</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
             </div>
 
             <!-- Modal body -->
@@ -29,10 +29,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Edit Data Kegiatan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span>
-
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
                 </div>
 
@@ -54,8 +53,8 @@
                     </div>
                     <div class="form-group">
                         <label>Catatan</label>
-                        <input value="{{ $kegiatan->catatan }}" type="text" name="catatan" id="catatan" class="form-control"
-                            required>
+                        <input value="{{ $kegiatan->catatan }}" type="text" name="catatan" id="catatan"
+                            class="form-control" required>
 
                         <small id="error-catatan" class="error-text form-text text-danger"></small>
                     </div>
@@ -132,5 +131,3 @@
         });
     </script>
 @endempty
-
-
