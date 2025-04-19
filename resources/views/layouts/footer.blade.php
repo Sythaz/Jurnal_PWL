@@ -1,4 +1,4 @@
-<footer class="main-footer">
+{{-- <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
         <b>Version</b> 3.2.0
     </div>
@@ -10,4 +10,4 @@
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
 </aside>
-<!-- /.control-sidebar -->
+<!-- /.control-sidebar --> --}}

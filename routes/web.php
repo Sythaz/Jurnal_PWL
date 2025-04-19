@@ -2,8 +2,8 @@
 
 use App\Http\Controllers\KegiatanController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/', [LoginController::class, 'index'])->name('welcome');
+Route::post('/login', [LoginController::class, 'login'])->name('login');
 
 Route::group(['prefix' => 'user'], function () {
     Route::get('/', [UserController::class, 'index']);          // <enampilkan halaman awal user
@@ -51,7 +52,7 @@ Route::group(['prefix' => 'level'], function () {
 });
 
 Route::group(['prefix' => 'kegiatan'], function () {
-    Route::get('/', [KegiatanController::class, 'index']);          // <enampilkan halaman awal kegiatan
+    Route::get('/', [KegiatanController::class, 'index'])->name('kegiatan.index');          // <enampilkan halaman awal kegiatan
     Route::post('/list', [KegiatanController::class, 'list']);      // Menampilkan data kegiatan dalam bentuk json untuk datatables
     Route::post('/', [KegiatanController::class, 'store']);         // menyimpan data kegiatan baru
     Route::get('/create_ajax', [KegiatanController::class, 'create_ajax']);     // Menampilkan halaman form tambah kegiatan Ajax

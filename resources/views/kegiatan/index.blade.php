@@ -1,6 +1,13 @@
 @extends('layouts.template')
 
 @section('content')
+    @if(session()->has('user_id'))
+        <!-- Session ada, tampilkan konten khusus user -->
+        <p>Welcome back, {{ session('username') }}</p>
+    @else
+        <!-- Session tidak ada, tampilkan konten umum -->
+        <p>Anda belum login</p>
+    @endif
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
@@ -73,13 +80,13 @@
                     }
                 },
                 columns: [{
-                        data: "waktu",                        
+                        data: "waktu",
                         orderable: true,
                         searchable: true,
                         width: "15%"
                     },
                     {
-                        data: "nama_kegiatan",                        
+                        data: "nama_kegiatan",
                         // orderable: true, jika ingin kolom ini bisa diurutkan
                         orderable: false,
                         // searchable: true, jika ingin kolom ini bisa dicari
@@ -92,7 +99,7 @@
                         searchable: true,
                         width: "40%"
                     }, {
-                        data: "aksi",                        
+                        data: "aksi",
                         orderable: false,
                         searchable: true,
                         width: "15%"

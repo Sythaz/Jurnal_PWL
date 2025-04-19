@@ -77,8 +77,9 @@ class KegiatanController extends Controller
                 ]);
             }
 
-            // Input manual karena belum menggunakan Auth
-            $request->merge(['user_id' => 1]);
+            // Menggunakan session untuk menentukan user yang sedang login
+            $user_id = session('user_id');
+            $request->merge(['user_id' => $user_id]);
 
             KegiatanModel::create($request->all());
             return response()->json([
