@@ -76,31 +76,6 @@
         </section>
     @endif
 
-<script>
-        $(document).ready(function() {
-            // Fungsi untuk handle sidebar state
-            function handleSidebar() {
-                if ($(window).width() >= 992) { // Desktop
-                    $('body').addClass('sidebar-collapse');
-                } else { // Mobile
-                    $('body').addClass('sidebar-collapse');
-                }
-            }
-
-            // Jalankan saat load dan resize
-            $(window).on('load resize', handleSidebar);
-            
-            // Handle toggle manual (jika perlu)
-            $('[data-widget="pushmenu"]').on('click', function() {
-                if ($(window).width() >= 992) {
-                    localStorage.setItem('sidebarState', 
-                        $('body').hasClass('sidebar-collapse') ? 'expanded' : 'collapsed'
-                    );
-                }
-            });
-        });
-    </script>
-
     <!-- jQuery -->
     <script src={{ asset('adminlte/plugins/jquery/jquery.min.js') }}></script>
     <!-- Bootstrap 4 -->
