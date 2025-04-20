@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,6 +12,13 @@ class UserController extends Controller
 {
     public function index()
     {
+        // Cek apakah user sudah login
+        $check = $this->checkSession();
+        if ($check) return $check;
+
+        // Cek apakah user adalah owner, akan mengembalikan boolean
+        $isOwner = $this->isOwner();
+        
         $breadcrumb = (object) [
             'title' => 'Daftar User',
             'list' => ['Home', 'User']
@@ -25,7 +31,7 @@ class UserController extends Controller
 
         $level = LevelModel::all();
 
-        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('user.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'isOwner' => $isOwner]);
     }
 
     // Ambil data user dalam bentuk json untuk datatables

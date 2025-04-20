@@ -12,6 +12,13 @@ class LevelController extends Controller
     // Menampilkan halaman awal level
     public function index()
     {
+        // Cek apakah user sudah login
+        $check = $this->checkSession();
+        if ($check) return $check;
+
+        // Cek apakah user adalah owner, akan mengembalikan boolean
+        $isOwner = $this->isOwner();
+        
         $breadcrumb = (object) [
             'title' => 'Daftar Level',
             'list' => ['Home', 'Level']
@@ -25,7 +32,7 @@ class LevelController extends Controller
 
         $level = LevelModel::all();
 
-        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu]);
+        return view('level.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'level' => $level, 'activeMenu' => $activeMenu, 'isOwner' => $isOwner]);
     }
 
     // Ambil data level dalam bentuk json untuk datatables
@@ -114,24 +121,6 @@ class LevelController extends Controller
                     'status' => false, // respon json, true: berhasil, false: gagal
                     'message' => 'Validasi gagal.',
                     'msgField' => $validator->errors() // menunjukkan field mana yang error
-                ]);
-            }
-
-            $check = LevelModel::find($id);
-            if ($check) {
-                if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
-
-                    $request->request->remove('password');
-                }
-                $check->update($request->all());
-                return response()->json([
-                    'status' => true,
-                    'message' => 'Data berhasil diupdate'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => false,
-                    'message' => 'Data tidak ditemukan'
                 ]);
             }
         }

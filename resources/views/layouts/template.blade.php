@@ -33,13 +33,13 @@
 
 
 <body class="hold-transition sidebar-mini sidebar-collapse">
-
     @if (isset($breadcrumb))
         <!-- Site wrapper -->
         <div class="wrapper">
             <!-- Navbar -->
-            {{-- Tidak menggunakan header --}}
-            {{-- @include('layouts.header') --}}
+            <div class="main-header d-lg-none">
+                @include('layouts.header')
+            </div>
             <!-- /.navbar -->
 
             <!-- Main Sidebar Container -->
@@ -68,11 +68,6 @@
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
-
-            {{-- Tidak menggunakan footer --}}
-            <!-- Control Footer -->
-            {{-- @include('layouts.footer') --}}
-            <!-- /.footer -->
         </div>
         <!-- ./wrapper -->
     @else
@@ -80,6 +75,31 @@
             @yield('content')
         </section>
     @endif
+
+<script>
+        $(document).ready(function() {
+            // Fungsi untuk handle sidebar state
+            function handleSidebar() {
+                if ($(window).width() >= 992) { // Desktop
+                    $('body').addClass('sidebar-collapse');
+                } else { // Mobile
+                    $('body').addClass('sidebar-collapse');
+                }
+            }
+
+            // Jalankan saat load dan resize
+            $(window).on('load resize', handleSidebar);
+            
+            // Handle toggle manual (jika perlu)
+            $('[data-widget="pushmenu"]').on('click', function() {
+                if ($(window).width() >= 992) {
+                    localStorage.setItem('sidebarState', 
+                        $('body').hasClass('sidebar-collapse') ? 'expanded' : 'collapsed'
+                    );
+                }
+            });
+        });
+    </script>
 
     <!-- jQuery -->
     <script src={{ asset('adminlte/plugins/jquery/jquery.min.js') }}></script>

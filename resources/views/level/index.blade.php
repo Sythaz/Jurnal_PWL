@@ -6,7 +6,7 @@
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <button type="button" class="btn btn-sm btn-success mt-1" onclick="modalAction('{{ url('level/create_ajax') }}')">
-                    Tambah Ajax
+                    Tambah
                 </button>
             </div>
         </div>

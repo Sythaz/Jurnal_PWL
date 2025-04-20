@@ -1,19 +1,12 @@
 @extends('layouts.template')
 
 @section('content')
-    @if(session()->has('user_id'))
-        <!-- Session ada, tampilkan konten khusus user -->
-        <p>Welcome back, {{ session('username') }}</p>
-    @else
-        <!-- Session tidak ada, tampilkan konten umum -->
-        <p>Anda belum login</p>
-    @endif
     <div class="card card-outline card-primary">
         <div class="card-header">
             <h3 class="card-title">{{ $page->title }}</h3>
             <div class="card-tools">
                 <button onclick="modalAction('{{ url('kegiatan/create_ajax') }}')" class="btn btn-sm btn-success mt-1">
-                    Tambah Ajax
+                    Tambah
                 </button>
             </div>
         </div>
@@ -29,10 +22,10 @@
                     <div class="form-group row">
                         <label class="col-1 control-label col-form-label">Filter :</label>
                         <div class="col-3">
-                            <select class="form-control" id="kegiatan_table" name="kegiatan_table" required>
+                            <select class="form-control" id="nama_kegiatan" name="nama_kegiatan" required>
                                 <option value="">- Semua -</option>
                                 @foreach ($kegiatans as $item)
-                                    <option value="{{ $item->kegiatan_id }}">{{ $item->nama_kegiatan }}</option>
+                                    <option value="{{ $item->nama_kegiatan }}">{{ $item->nama_kegiatan }}</option>
                                 @endforeach
                             </select>
                             <small class="form-text text-muted">Nama Kegiatan</small>
@@ -76,7 +69,7 @@
                     "dataType": "json",
                     "type": "POST",
                     "data": function(d) {
-                        d.kegiatan_table = $('#kegiatan_table').val();
+                        d.nama_kegiatan = $('#nama_kegiatan').val();
                     }
                 },
                 columns: [{
@@ -107,7 +100,7 @@
                 ]
             });
 
-            $('#kegiatan_table').on('change', function() {
+            $('#nama_kegiatan').on('change', function() {
                 dataKegiatan.ajax.reload();
             })
         });

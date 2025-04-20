@@ -54,7 +54,7 @@
                     <div class="form-group">
                         <label>Catatan</label>
                         <input value="{{ $kegiatan->catatan }}" type="text" name="catatan" id="catatan"
-                            class="form-control" required>
+                            class="form-control">
 
                         <small id="error-catatan" class="error-text form-text text-danger"></small>
                     </div>

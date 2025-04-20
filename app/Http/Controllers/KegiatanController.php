@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\KegiatanModel;
-use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -13,6 +11,13 @@ class KegiatanController extends Controller
 {
     public function index()
     {
+        // Cek apakah user sudah login
+        $check = $this->checkSession();
+        if ($check) return $check;
+
+        // Cek apakah user adalah owner, akan mengembalikan boolean
+        $isOwner = $this->isOwner();
+
         $breadcrumb = (object) [
             'title' => 'Daftar Kegiatan',
             'list' => ['Home', 'Kegiatan']
@@ -22,16 +27,25 @@ class KegiatanController extends Controller
         ];
 
         $activeMenu = 'kegiatan'; // Set menu yang sedang aktif
+        
+        $userId = session('user_id');
 
-        $kegiatans = KegiatanModel::all();
+        $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')
+            ->where('user_id', $userId) // Filter berdasarkan user_id
+            ->with('user')
+            ->get();
 
-        return view('kegiatan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kegiatans' => $kegiatans, 'activeMenu' => $activeMenu]);
+        return view('kegiatan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kegiatans' => $kegiatans, 'activeMenu' => $activeMenu, 'isOwner' => $isOwner]);
     }
 
     // Ambil data kegiatan dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')->with('user');
+        $userId = session('user_id');
+
+        $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')
+            ->where('user_id', $userId) // Filter berdasarkan user_id
+            ->with('user');
 
         if ($request->nama_kegiatan) {
             $kegiatans->where('nama_kegiatan', $request->nama_kegiatan);
@@ -63,16 +77,16 @@ class KegiatanController extends Controller
         // cek apakah request berupa ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'nama_kegiatan' => 'required|string|min:3|unique:m_kegiatan,nama_kegiatan',
+                'nama_kegiatan' => 'required|string|min:3',
                 'waktu' => 'required|date',
                 'catatan' => 'nullable|string|max:255',
             ];
-            // use Illuminate \Support\Facades\Validator;
+            
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json([
                     'status' => false, // response status, false: error/gagal, true: berhasil
-                    'message' => 'Validasi Gagal',
+                    'message' => 'Validasi Gagal disimpan',
                     'msgField' => $validator->errors(), // pesan error validasi
                 ]);
             }
@@ -108,10 +122,9 @@ class KegiatanController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'kegiatan_id' => 'required|integer',
-                'username' => 'required|max:20|unique:m_user,username,' . $id . ',user_id',
-                'nama_lengkap' => 'required|max:100',
-                'password' => 'nullable|min:6|max:20'
+                'nama_kegiatan' => 'required|string|min:3',
+                'waktu' => 'required|date',
+                'catatan' => 'nullable|string|max:255',
             ];
 
             // use Illuminate\Support\Facades\Validator;
@@ -124,13 +137,9 @@ class KegiatanController extends Controller
                 ]);
             }
 
-            $check = UserModel::find($id);
-            if ($check) {
-                if (!$request->filled('password')) { // jika password tidak diisi, maka hapus dari request
-
-                    $request->request->remove('password');
-                }
-                $check->update($request->all());
+            $kegiatan = KegiatanModel::find($id);
+            if ($kegiatan) {
+                $kegiatan->update($request->all());
                 return response()->json([
                     'status' => true,
                     'message' => 'Data berhasil diupdate'

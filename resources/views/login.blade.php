@@ -1,6 +1,15 @@
 @extends('layouts.template')
+<?php
+    session()->forget('user_id');
+?>
 
 @section('content')
+    @if (session('errorAuth'))
+        <div class="alert alert-danger" style="margin: auto; border-radius: 0">
+            {{ session('errorAuth') }}
+        </div>
+    @endif
+
     <div class="tampilan">
         <div class="tampilan-content">
             <h1 class="welcome-text">Satu Hari,<br>Satu Cerita,<br>Satu Jejak Kehidupan.</h1>
@@ -17,7 +26,7 @@
                 style="border-radius: 10px ">
                 <div class="login-logo font-weight-bold"><b>Sign In</b></div>
                 <p class="login-box-msg">Sign in untuk memulai jurnaling mu</p>
-                
+
                 @if (session('error'))
                     <div class="alert alert-danger">
                         {{ session('error') }}

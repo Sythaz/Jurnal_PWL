@@ -13,32 +13,38 @@
     <!-- Sidebar Menu -->
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            <li class="nav-item">
-                <a href="{{ url('/') }}" class="nav-link {{ $activeMenu == 'dashboard' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                    <p>Dashboard</p>
-                </a>
-            </li>
-            <li class="nav-header">Data Pengguna</li>
-            <li class="nav-item">
-                <a href="{{ url('/user') }}" class="nav-link {{ $activeMenu == 'user' ? 'active' : '' }}">
-                    <i class="nav-icon far fa-user"></i>
-                    <p>Data User</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }} ">
-                    <i class="nav-icon fas fa-user-tag"></i>
-                    <p>Level</p>
-                </a>
-            </li>
+            @if($isOwner)
+                <li class="nav-header">Data Pengguna</li>
+                <li class="nav-item">
+                    <a href="{{ url('/user') }}" class="nav-link {{ $activeMenu == 'user' ? 'active' : '' }}">
+                        <i class="nav-icon far fa-user"></i>
+                        <p>Data User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url('/level') }}" class="nav-link {{ $activeMenu == 'level' ? 'active' : '' }}">
+                        <i class="nav-icon fas fa-user-tag"></i>
+                        <p>Level</p>
+                    </a>
+                </li>
+            @endif
             <li class="nav-header">Kegiatan</li>
             <li class="nav-item">
-                <a href="{{ url('/kegiatan') }}" class="nav-link {{ $activeMenu == 'kegiatan' ? 'active' : '' }} ">
+                <a href="{{ url('/kegiatan') }}" class="nav-link {{ $activeMenu == 'kegiatan' ? 'active' : '' }}">
                     <i class="nav-icon far fa-list-alt"></i>
                     <p>Kegiatan</p>
                 </a>
-            </li>            
+            </li>
+        </ul>
+
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false"
+            style="position: absolute; bottom: 0;">
+            <li class="nav-item">
+                <a href="{{ url('/') }}" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p>Log out</p>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

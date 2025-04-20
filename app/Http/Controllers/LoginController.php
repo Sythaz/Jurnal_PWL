@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\UserModel;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -25,8 +24,9 @@ class LoginController extends Controller
         if ($user && $user->password === $request->password) {
             session([
                 'user_id' => $user->user_id,
-                'username' => $user->username
+                'level_id' => $user->level_id
             ]);
+
             return redirect()->route('kegiatan.index');
         }
 
