@@ -31,9 +31,11 @@ class KegiatanController extends Controller
         $userId = session('user_id');
 
         $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')
-            ->where('user_id', $userId) // Filter berdasarkan user_id
-            ->with('user')
-            ->get();
+            ->with('user');
+        if (!$isOwner) {
+            $kegiatans->where('user_id', $userId); // Filter berdasarkan user_id
+        }
+        $kegiatans = $kegiatans->get(); // Menggunakan get() untuk mengeksekusi query dan mengambil data dari database sebagai collection
 
         return view('kegiatan.index', ['breadcrumb' => $breadcrumb, 'page' => $page, 'kegiatans' => $kegiatans, 'activeMenu' => $activeMenu, 'isOwner' => $isOwner]);
     }
@@ -43,9 +45,12 @@ class KegiatanController extends Controller
     {
         $userId = session('user_id');
 
-        $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')
-            ->where('user_id', $userId) // Filter berdasarkan user_id
-            ->with('user');
+        $isOwner = $this->isOwner();
+
+        $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')->with('user');
+        if (!$isOwner) {
+            $kegiatans->where('user_id', $userId); // Filter berdasarkan user_id
+        }
 
         if ($request->nama_kegiatan) {
             $kegiatans->where('nama_kegiatan', $request->nama_kegiatan);
