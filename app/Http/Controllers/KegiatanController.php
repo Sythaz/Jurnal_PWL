@@ -11,17 +11,20 @@ class KegiatanController extends Controller
 {
     public function index()
     {
-        // Cek apakah user sudah login
+        // Cek apakah user sudah login. Mengambil fungsi dari class Controller
         $check = $this->checkSession();
         if ($check) return $check;
 
-        // Cek apakah user adalah owner, akan mengembalikan boolean
+        // Cek apakah user adalah owner, akan mengembalikan boolean. Mengambil fungsi dari class Controller
         $isOwner = $this->isOwner();
 
+        // Title dan breadcrumb (navigasi) untuk halaman
         $breadcrumb = (object) [
             'title' => 'Daftar Kegiatan',
             'list' => ['Home', 'Kegiatan']
         ];
+
+        // Judul untuk card
         $page = (object) [
             'title' => 'Daftar kegiatan yang terdaftar dalam sistem'
         ];
@@ -43,15 +46,19 @@ class KegiatanController extends Controller
     // Ambil data kegiatan dalam bentuk json untuk datatables
     public function list(Request $request)
     {
+        // Cek apakah user sudah login. Mengambil fungsi dari class Controller
         $userId = session('user_id');
 
+        // Cek apakah user adalah owner, akan mengembalikan boolean. Mengambil fungsi dari class Controller
         $isOwner = $this->isOwner();
 
+        // Menggunakan query builder untuk mengambil data kegiatan
         $kegiatans = KegiatanModel::select('kegiatan_id', 'user_id', 'nama_kegiatan', 'waktu', 'catatan')->with('user');
         if (!$isOwner) {
             $kegiatans->where('user_id', $userId); // Filter berdasarkan user_id
         }
 
+        // Filtering jika terdapat request dari ajax (filter)
         if ($request->nama_kegiatan) {
             $kegiatans->where('nama_kegiatan', $request->nama_kegiatan);
         }
@@ -80,13 +87,19 @@ class KegiatanController extends Controller
     public function store_ajax(Request $request)
     {
         // cek apakah request berupa ajax
+        // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
+            // Aturan validasi input
+            // nama_kegiatan harus diisi, string, minimal 3 karakter
+            // waktu harus diisi, berupa tanggal
+            // catatan tidak wajib diisi, string, maximal 255 karakter
             $rules = [
                 'nama_kegiatan' => 'required|string|min:3',
                 'waktu' => 'required|date',
                 'catatan' => 'nullable|string|max:255',
             ];
             
+            // Validasi input
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json([
@@ -97,6 +110,7 @@ class KegiatanController extends Controller
             }
 
             // Menggunakan session untuk menentukan user yang sedang login
+            // (Tidak tampil di tabel, hanya untuk mengisi kolom user_id)
             $user_id = session('user_id');
             $request->merge(['user_id' => $user_id]);
 
@@ -126,6 +140,10 @@ class KegiatanController extends Controller
     {
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
+            // Aturan validasi input
+            // nama_kegiatan harus diisi, string, minimal 3 karakter
+            // waktu harus diisi, berupa tanggal
+            // catatan tidak wajib diisi, string, maximal 255 karakter
             $rules = [
                 'nama_kegiatan' => 'required|string|min:3',
                 'waktu' => 'required|date',
@@ -186,3 +204,4 @@ class KegiatanController extends Controller
         }
     }
 }
+

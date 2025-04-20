@@ -11,19 +11,19 @@
                 <div class="form-group">
                     <label>Nama Kegiatan</label>
                     <input value="" type="text" name="nama_kegiatan" id="nama_kegiatan" class="form-control" required>
-
+                    <!-- Validasi: Nama Kegiatan harus diisi, minimal 3 karakter, dan maximal 20 karakter -->
                     <small id="error-nama_kegiatan" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Waktu</label>
                     <input value="" type="datetime-local" name="waktu" id="waktu" class="form-control" required>
-
+                    <!-- Validasi: Waktu harus diisi dan formatnya datetime-local -->
                     <small id="error-waktu" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
                     <label>Catatan</label>
                     <input value="" type="text" name="catatan" id="catatan" class="form-control">
-
+                    <!-- Validasi: Catatan tidak wajib diisi -->
                     <small id="error-catatan" class="error-text form-text text-danger"></small>
                 </div>
             </div>
@@ -39,12 +39,13 @@
         $("#form-tambah").validate({
             rules: {
                 nama_kegiatan: {
-                    required: true,
-                    minlength: 3,
-                    maxlength: 20
+                    required: true, // Nama Kegiatan harus diisi
+                    minlength: 3,   // Minimal 3 karakter
+                    maxlength: 20   // Maksimal 20 karakter
                 },
                 waktu: {
-                    required: true,
+                    required: true, // Waktu harus diisi
+                    date: true      // Format harus tanggal
                 },
             },
             submitHandler: function(form) {

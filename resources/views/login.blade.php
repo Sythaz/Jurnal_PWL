@@ -16,7 +16,7 @@
             <p class="deskripsi">Jadikan journal harianmu sebagai cermin pertumbuhan, saksi<br>perjalanan, dan harta karun
                 kenangan yang tak ternilai.</p>
             <div class="btn btn-dark">
-                <a href="login" class="text-white">Get started</a>
+                <a href="" class="text-white">Get started</a>
             </div>
         </div>
 

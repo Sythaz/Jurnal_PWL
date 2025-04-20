@@ -13,18 +13,20 @@ class LevelController extends Controller
     // Menampilkan halaman awal level
     public function index()
     {
-        // Cek apakah user sudah login
+        // Cek apakah user sudah login. Mengambil fungsi dari class Controller
         $check = $this->checkSession();
         if ($check) return $check;
 
-        // Cek apakah user adalah owner, akan mengembalikan boolean
+        // Cek apakah user adalah owner, akan mengembalikan boolean. Mengambil fungsi dari class Controller
         $isOwner = $this->isOwner();
-        
+
+        // Title dan breadcrumb (navigasi) untuk halaman
         $breadcrumb = (object) [
             'title' => 'Daftar Level',
             'list' => ['Home', 'Level']
         ];
 
+        // Judul untuk card
         $page = (object) [
             'title' => 'Daftar level yang terdaftar dalam sistem'
         ];
@@ -39,6 +41,7 @@ class LevelController extends Controller
     // Ambil data level dalam bentuk json untuk datatables
     public function list(Request $request)
     {
+        // Mengambil data level
         $level = LevelModel::select('level_id', 'level_kode', 'level_nama');
 
         if ($request->level_kode) {
@@ -75,7 +78,8 @@ class LevelController extends Controller
                 'level_kode' => 'required|string|min:3|unique:m_level,level_kode',
                 'level_nama' => 'required|string|max:100', // nama harus diisi, berupa string, dan maksimal 100 karakter
             ];
-            // use Illuminate \Support\Facades\Validator;
+
+            // Validasi input
             $validator = Validator::make($request->all(), $rules);
             if ($validator->fails()) {
                 return response()->json([
@@ -96,12 +100,14 @@ class LevelController extends Controller
     // Menampilkan halaman form edit level ajax
     public function show_ajax(string $id)
     {
+        // Mencari data level berdasarkan ID
         $level = LevelModel::find($id);
         return view('level.show_ajax', ['level' => $level]);
     }
 
     public function edit_ajax(string $id)
     {
+        // Mencari data level berdasarkan ID
         $level = LevelModel::find($id);
         return view('level.edit_ajax', ['level' => $level]);
     }
@@ -109,15 +115,17 @@ class LevelController extends Controller
     public function update_ajax(Request $request, $id)
     {
         // cek apakah request dari ajax
+        // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
+            // aturan validasi input
             $rules = [
                 'level_kode' => [
-                    'required',
-                    'string',
-                    'min:3',
-                    Rule::unique('m_level', 'level_kode')->ignore($id, 'level_id'),
+                    'required', // level_kode harus diisi
+                    'string', // level_kode harus berupa string
+                    'min:3', // level_kode harus berisi minimal 3 karakter
+                    Rule::unique('m_level', 'level_kode')->ignore($id, 'level_id'), // level_kode harus bernilai unik di tabel m_level kolom level_kode, kecuali data yang sedang diupdate
                 ],
-                'level_nama' => 'required|string|max:100',
+                'level_nama' => 'required|string|max:100', // level_nama harus diisi, berupa string, dan maximal 100 karakter
             ];
 
             // use Illuminate\Support\Facades\Validator;

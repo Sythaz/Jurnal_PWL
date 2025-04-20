@@ -16,26 +16,34 @@
                             <option value="{{ $l->level_id }}">{{ $l->level_nama }}</option>
                         @endforeach
                     </select>
-                    <small id="error-level_id" class="error-text form-text text-danger"></small>
+                    <small id="error-level_id" class="error-text form-text text-danger">
+                        <!-- Validasi: Kode level harus diisi, angka, dan minimal 1 digit -->
+                    </small>
                 </div>
                 <div class="form-group">
                     <label>Username</label>
                     <input value="" type="text" name="username" id="username" class="form-control" required>
 
-                    <small id="error-username" class="error-text form-text text-danger"></small>
+                    <small id="error-username" class="error-text form-text text-danger">
+                        <!-- Validasi: Username harus diisi, minimal 3 karakter, dan maximal 20 karakter -->
+                    </small>
                 </div>
                 <div class="form-group">
                     <label>Nama Lengkap</label>
                     <input value="" type="text" name="nama_lengkap" id="nama_lengkap" class="form-control" required>
 
-                    <small id="error-nama_lengkap" class="error-text form-text text-danger"></small>
+                    <small id="error-nama_lengkap" class="error-text form-text text-danger">
+                        <!-- Validasi: Nama lengkap harus diisi, minimal 3 karakter, dan maximal 100 karakter -->
+                    </small>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
 
                     <input value="" type="password" name="password" id="password" class="form-control" required>
 
-                    <small id="error-password" class="error-text form-text text-danger"></small>
+                    <small id="error-password" class="error-text form-text text-danger">
+                        <!-- Validasi: Password harus diisi, minimal 6 karakter, dan maximal 20 karakter -->
+                    </small>
                 </div>
             </div>
             <div class="modal-footer">
@@ -49,20 +57,24 @@
     $(document).ready(function() {
         $("#form-tambah").validate({
             rules: {
+                // Kode level harus diisi, angka, dan minimal 1 digit
                 level_id: {
                     required: true,
                     number: true
                 },
+                // Username harus diisi, minimal 3 karakter, dan maximal 20 karakter
                 username: {
                     required: true,
                     minlength: 3,
                     maxlength: 20
                 },
+                // Nama Lengkap harus diisi, minimal 3 karakter, dan maximal 100 karakter
                 nama_lengkap: {
                     required: true,
                     minlength: 3,
                     maxlength: 100
                 },
+                // Password harus diisi, minimal 6 karakter, dan maximal 20 karakter
                 password: {
                     required: true,
                     minlength: 6,

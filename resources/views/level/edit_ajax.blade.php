@@ -31,12 +31,14 @@
                         <label>Kode Level</label>
                         <input type="text" name="level_kode" id="level_kode" class="form-control"
                             value="{{ $level->level_kode }}" required>
+                        <!-- Validasi: Kode Level harus diisi, minimal 3 karakter, dan maximal 20 karakter -->
                         <small id="error-level_kode" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Nama Level</label>
                         <input type="text" name="level_nama" id="level_nama" class="form-control"
                             value="{{ $level->level_nama }}" required>
+                        <!-- Validasi: Nama Level harus diisi, minimal 3 karakter, dan maximal 100 karakter -->
                         <small id="error-level_nama" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
@@ -52,12 +54,12 @@
             $("#form-edit").validate({
                 rules: {
                     level_kode: {
-                        required: true,
-                        maxlength: 10
+                        required: true, // Kode level harus diisi
+                        maxlength: 10 // Maksimal 10 karakter
                     },
                     level_nama: {
-                        required: true,
-                        maxlength: 100
+                        required: true, // Nama level harus diisi
+                        maxlength: 100 // Maksimal 100 karakter
                     }
                 },
                 submitHandler: function(form) {

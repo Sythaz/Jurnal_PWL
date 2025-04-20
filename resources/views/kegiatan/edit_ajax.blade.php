@@ -41,21 +41,21 @@
                         <label>Nama Kegiatan</label>
                         <input value="{{ $kegiatan->nama_kegiatan }}" type="text" name="nama_kegiatan" id="nama_kegiatan"
                             class="form-control" required>
-
+                        <!-- Validasi: Nama Kegiatan harus diisi -->
                         <small id="error-nama_kegiatan" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Waktu</label>
                         <input value="{{ $kegiatan->waktu }}" type="datetime-local" name="waktu" id="waktu"
                             class="form-control" required>
-
+                        <!-- Validasi: Waktu harus diisi -->
                         <small id="error-waktu" class="error-text form-text text-danger"></small>
                     </div>
                     <div class="form-group">
                         <label>Catatan</label>
                         <input value="{{ $kegiatan->catatan }}" type="text" name="catatan" id="catatan"
                             class="form-control">
-
+                        <!-- Validasi: Catatan tidak wajib diisi -->
                         <small id="error-catatan" class="error-text form-text text-danger"></small>
                     </div>
                 </div>
@@ -73,17 +73,17 @@
             $("#form-edit").validate({
                 rules: {
                     nama_kegiatan: {
-                        required: true,
-                        minlength: 3,
-                        maxlength: 100
+                        required: true, // harus diisi
+                        minlength: 3, // minimal 3 karakter
+                        maxlength: 100 // maximal 100 karakter
                     },
                     waktu: {
-                        required: true,
-                        date: true
+                        required: true, // harus diisi
+                        date: true // harus format tanggal
                     },
                     catatan: {
-                        minlength: 0,
-                        maxlength: 200
+                        minlength: 0, // tidak ada minimal karakter
+                        maxlength: 200 // maximal 200 karakter
                     }
                 },
                 submitHandler: function(form) {
