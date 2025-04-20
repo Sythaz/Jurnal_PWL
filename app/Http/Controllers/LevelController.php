@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\LevelModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class LevelController extends Controller
@@ -110,8 +111,13 @@ class LevelController extends Controller
         // cek apakah request dari ajax
         if ($request->ajax() || $request->wantsJson()) {
             $rules = [
-                'level_kode' => 'required|string|max:10|unique:m_level,level_kode,' . $id . ',level_id',
-                'level_nama' => 'required|string|max:100'
+                'level_kode' => [
+                    'required',
+                    'string',
+                    'min:3',
+                    Rule::unique('m_level', 'level_kode')->ignore($id, 'level_id'),
+                ],
+                'level_nama' => 'required|string|max:100',
             ];
 
             // use Illuminate\Support\Facades\Validator;
@@ -121,6 +127,20 @@ class LevelController extends Controller
                     'status' => false, // respon json, true: berhasil, false: gagal
                     'message' => 'Validasi gagal.',
                     'msgField' => $validator->errors() // menunjukkan field mana yang error
+                ]);
+            }
+
+            $level = LevelModel::find($id);
+            if ($level) {
+                $level->update($request->all());
+                return response()->json([
+                    'status' => true,
+                    'message' => 'Data berhasil diupdate'
+                ]);
+            } else {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Data tidak ditemukan'
                 ]);
             }
         }
