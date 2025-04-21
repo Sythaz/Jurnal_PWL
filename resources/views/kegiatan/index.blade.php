@@ -24,7 +24,7 @@
                         <div class="col-3">
                             <select class="form-control" id="nama_kegiatan" name="nama_kegiatan" required>
                                 <option value="">- Semua -</option>
-                                @foreach ($kegiatans as $item)
+                                @foreach ($kegiatans->unique('nama_kegiatan') as $item)
                                     <option value="{{ $item->nama_kegiatan }}">{{ $item->nama_kegiatan }}</option>
                                 @endforeach
                             </select>
@@ -106,3 +106,4 @@
         });
     </script>
 @endpush
+

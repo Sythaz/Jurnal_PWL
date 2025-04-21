@@ -25,7 +25,7 @@
                         <div class="col-3">
                             <select class="form-control" id="level_kode" name="level_kode" required>
                                 <option value="">- Semua -</option>
-                                @foreach ($level as $item)
+                                @foreach ($level->unique('level_kode') as $item)
                                     <option value="{{ $item->level_kode }}">{{ $item->level_kode }}</option>
                                 @endforeach
                             </select>

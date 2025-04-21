@@ -9,13 +9,13 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label>Kode</label>
+                    <label>Kode Level</label>
                     <input value="" type="text" name="level_kode" id="level_kode" class="form-control" required>
                     <!-- Kode harus diisi, minimal 3 karakter, dan maximal 20 karakter -->
                     <small id="error-kode" class="error-text form-text text-danger"></small>
                 </div>
                 <div class="form-group">
-                    <label>Nama</label>
+                    <label>Nama Level</label>
                     <input value="" type="text" name="level_nama" id="level_nama" class="form-control" required>
                     <!-- Nama harus diisi -->
                     <small id="error-nama" class="error-text form-text text-danger"></small>

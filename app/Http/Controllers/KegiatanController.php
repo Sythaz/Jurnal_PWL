@@ -86,41 +86,41 @@ class KegiatanController extends Controller
 
     public function store_ajax(Request $request)
     {
-        // cek apakah request berupa ajax
-        // cek apakah request dari ajax
-        if ($request->ajax() || $request->wantsJson()) {
-            // Aturan validasi input
-            // nama_kegiatan harus diisi, string, minimal 3 karakter
-            // waktu harus diisi, berupa tanggal
-            // catatan tidak wajib diisi, string, maximal 255 karakter
-            $rules = [
-                'nama_kegiatan' => 'required|string|min:3',
-                'waktu' => 'required|date',
-                'catatan' => 'nullable|string|max:255',
-            ];
-            
-            // Validasi input
-            $validator = Validator::make($request->all(), $rules);
-            if ($validator->fails()) {
+            // cek apakah request berupa ajax
+            // cek apakah request dari ajax
+            if ($request->ajax() || $request->wantsJson()) {
+                // Aturan validasi input
+                // nama_kegiatan harus diisi, string, minimal 3 karakter
+                // waktu harus diisi, berupa tanggal
+                // catatan tidak wajib diisi, string, maximal 255 karakter
+                $rules = [
+                    'nama_kegiatan' => 'required|string|min:3',
+                    'waktu' => 'required|date',
+                    'catatan' => 'nullable|string|max:255',
+                ];
+                
+                // Validasi input
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return response()->json([
+                        'status' => false, // response status, false: error/gagal, true: berhasil
+                        'message' => 'Validasi Gagal disimpan',
+                        'msgField' => $validator->errors(), // pesan error validasi
+                    ]);
+                }
+
+                // Menggunakan session untuk menentukan user yang sedang login
+                // (Tidak tampil di tabel, hanya untuk mengisi kolom user_id)
+                $user_id = session('user_id');
+                $request->merge(['user_id' => $user_id]);
+
+                KegiatanModel::create($request->all());
                 return response()->json([
-                    'status' => false, // response status, false: error/gagal, true: berhasil
-                    'message' => 'Validasi Gagal disimpan',
-                    'msgField' => $validator->errors(), // pesan error validasi
+                    'status' => true,
+                    'message' => 'Data kegiatan berhasil disimpan'
                 ]);
+                redirect('/');
             }
-
-            // Menggunakan session untuk menentukan user yang sedang login
-            // (Tidak tampil di tabel, hanya untuk mengisi kolom user_id)
-            $user_id = session('user_id');
-            $request->merge(['user_id' => $user_id]);
-
-            KegiatanModel::create($request->all());
-            return response()->json([
-                'status' => true,
-                'message' => 'Data kegiatan berhasil disimpan'
-            ]);
-            redirect('/');
-        }
     }
 
     public function show_ajax(string $id)
